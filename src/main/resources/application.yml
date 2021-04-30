@@ -1,0 +1,61 @@
+# pulsar配置
+pulsarServiceUrl: pulsar://200.22.242.49:6650
+spring:
+    kafka:
+        bootstrap-servers: 123.57.181.40:9092 123.57.181.40:9093 123.57.181.40:9094
+        consumer:
+            group-id: 'kafkalog #群组ID'
+            # 最早未被消费的offset
+            auto-offset-reset: earliest
+            # 批量一次最大拉取数据量
+            max-poll-records: 3000
+            # 自动提交时间间隔， 这种直接拉到数据就提交 容易丢数据
+            auto:
+                commit-interval: 100
+            # 禁止自动提交
+            enable-auto-commit: false
+            fetch:
+                max-wait: 6000
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            zookeeper:
+                connect: 123.57.181.40:2181
+                servers: 123.57.181.40:9082
+        producer:
+            # 重试次数
+            retries: 3
+            # 消息累计到batch-size的值后，才会发送消息，默认为16384
+            batch-size: 16384
+            # 32MB的批处理缓冲区
+            buffer-memory: 33554432
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        listener:
+            missing-topics-fatal: false
+            type: batch
+    outkafka:
+        bootstrap-servers: 123.57.181.40:9092 123.57.181.40:9093 123.57.181.40:9094
+        consumer:
+            # 批量一次最大拉取数据量
+            max-poll-records: 3000
+            auto:
+                commit-interval: 100
+            auto-offset-reset: earliest
+            enable-auto-commit: false
+            fetch:
+                max-wait: 6000
+            group-id: kafkalog2
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            zookeeper:
+                connect: 123.57.181.40:2181
+                servers: 123.57.181.40:9082
+        producer:
+            batch-size: 16384
+            buffer-memory: 33554432
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            retries: 0
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        listener:
+            missing-topics-fatal: false
+            type: batch
