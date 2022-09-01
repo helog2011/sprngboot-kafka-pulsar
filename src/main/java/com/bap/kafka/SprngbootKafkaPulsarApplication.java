@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SprngbootKafkaPulsarApplication {
 
     public static void main(String[] args) {
+        //mian    第一次提交
         SpringApplication.run(SprngbootKafkaPulsarApplication.class, args);
     }
 
